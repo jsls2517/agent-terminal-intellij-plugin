@@ -6,7 +6,7 @@
     <vendor email="wenbing@mgtv.com">wenbing</vendor>
 
     <!-- 兼容范围：242+ 覆盖 2024.2 起的大多数版本。后续可再调大/小。 -->
-    <idea-version since-build="242.0" />
+    <idea-version since-build="242.0"/>
 
     <description><![CDATA[
 A terminal integration plugin for Claude Code CLI. This plugin provides a tool window to run and interact with Claude Code directly within JetBrains IDEs.
@@ -41,18 +41,42 @@ A terminal integration plugin for Claude Code CLI. This plugin provides a tool w
     </extensions>
 
     <actions>
-        <group id="ClaudeCode.MenuGroup"
-               text="Claude Actions"
-               description="Claude Code actions"
-               popup="true">
+        <!-- 编辑器右键菜单：发送文件引用 -->
+        <group id="ClaudeCode.EditorGroup">
+            <separator/>
+            <group id="ClaudeCode.EditorActionGroup"
+                   text="Claude Actions"
+                   description="Claude Code actions"
+                   popup="true">
+                <action id="ClaudeCode.SendToClaude"
+                        class="com.zhangwenbing.claude.SendToClaudeTerminalAction"
+                        text="Send to Claude Code Terminal"
+                        description="Send file reference (e.g. file.java:L1-5) to Claude Code Terminal"
+                        icon="/icons/agent.svg">
+                </action>
+            </group>
+            <separator/>
+            <add-to-group group-id="BasicEditorPopupMenu" anchor="first"/>
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
-            <action id="ClaudeCode.SendToTerminal"
-                    class="com.zhangwenbing.claude.SendToClaudeTerminalAction"
-                    text="Send to Claude Code Terminal"
-                    description="Send file reference (e.g. file.java:L1-5) to Claude Code Terminal"
-                    icon="/icons/agent.svg">
-<!--                <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt C"/>-->
-            </action>
+            <add-to-group group-id="Diff.EditorPopupMenu" anchor="first"/>
+        </group>
+
+        <!-- 终端右键菜单：发送选中文本 -->
+        <group id="ClaudeCode.ConsoleGroup">
+            <separator/>
+            <group id="ClaudeCode.ConsoleActionGroup"
+                   text="Claude Actions"
+                   description="Claude Code actions"
+                   popup="true">
+                <action id="ClaudeCode.SendConsoleSelectionToClaude"
+                        class="com.zhangwenbing.claude.SendConsoleSelectionToClaudeAction"
+                        text="Send to Claude Code Terminal"
+                        description="Send selected text from console to Claude Code Terminal"
+                        icon="/icons/agent.svg">
+                </action>
+            </group>
+            <separator/>
+            <add-to-group group-id="ConsoleEditorPopupMenu" anchor="first"/>
         </group>
     </actions>
 </idea-plugin>
