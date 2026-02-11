@@ -1,0 +1,56 @@
+<idea-plugin>
+    <id>com.zhangwenbing.claude</id>
+    <name>Claude Code Terminal</name>
+    <version>1.1.0</version>
+
+    <vendor email="wenbing@mgtv.com">wenbing</vendor>
+
+    <!-- 兼容范围：242+ 覆盖 2024.2 起的大多数版本。后续可再调大/小。 -->
+    <idea-version since-build="242.0" />
+
+    <description><![CDATA[
+<i>免责声明：本插件为独立项目，与 Anthropic 无关，不代表其立场或获得授权。</i></p>
+]]></description>
+
+    <change-notes><![CDATA[
+
+]]></change-notes>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>org.jetbrains.plugins.terminal</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow
+                id="Claude Code"
+                anchor="right"
+                factoryClass="com.zhangwenbing.claude.ClaudeCodeToolWindowFactory"
+                canCloseContents="false"
+                icon="/icons/agent.svg"/>
+        <notificationGroup
+                id="claude.code.notifications"
+                displayType="BALLOON"
+                isLogByDefault="true"/>
+        <!-- Settings -> Tools -> Claude Code Terminal -->
+        <applicationConfigurable
+                parentId="tools"
+                instance="com.zhangwenbing.claude.ClaudeCodeConfigurable"
+                id="claude.code.settings"
+                displayName="Claude Code Terminal"/>
+    </extensions>
+
+    <actions>
+        <group id="ClaudeCode.MenuGroup"
+               text="Claude Actions"
+               description="Claude Code actions"
+               popup="true">
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+            <action id="ClaudeCode.SendToTerminal"
+                    class="com.zhangwenbing.claude.SendToClaudeTerminalAction"
+                    text="Send to Claude Code Terminal"
+                    description="Send file reference (e.g. file.java:L1-5) to Claude Code Terminal"
+                    icon="/icons/agent.svg">
+<!--                <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt C"/>-->
+            </action>
+        </group>
+    </actions>
+</idea-plugin>
