@@ -2,13 +2,6 @@
 
 在 IntelliJ IDEA 右侧工具窗内，以交互式终端运行本地 `claude` (Claude Code CLI)。打开工具窗即可进入，直接在里面操作即可。
 
-### ✨ 功能亮点
-
-- **一键聚焦/重启**: 用快捷键快速切换终端；按住 Shift 即可重建会话
-- **自动启动**: PATH 中检测到 `claude` 即自动运行，无需额外配置
-- **界面简洁**: 独立右侧 ToolWindow，隐藏底部 Terminal，避免重复窗口
-- **智能提示**: 未检测到 CLI 时自动气泡提醒
-
 ### 📋 要求
 
 - IntelliJ IDEA 2024.2+（或任何 JetBrains IDE：PyCharm、WebStorm、PhpStorm 等）
@@ -20,11 +13,13 @@
 1. 克隆本仓库
 2. 运行 `./gradlew buildPlugin`
 3. 在 Settings → Plugins → Install from Disk 中选择 `build/distributions/` 下生成的 ZIP
+4. 或者在此仓库的Actions中下载最新 release 版本的插件
 
 ### 🚀 用法
 
 1. 打开右侧 "Claude Code Terminal" 工具窗
 2. 若已安装 `claude` 将自动启动
+3. 也可以在设置页面自定义启动命令（默认 `claude`）
 
 ### 🛠️ 开发
 
