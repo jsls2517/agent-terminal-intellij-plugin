@@ -9,7 +9,9 @@
     <idea-version since-build="242.0" />
 
     <description><![CDATA[
-<i>免责声明：本插件为独立项目，与 Anthropic 无关，不代表其立场或获得授权。</i></p>
+A terminal integration plugin for Claude Code CLI. This plugin provides a tool window to run and interact with Claude Code directly within JetBrains IDEs.
+
+<i>Disclaimer: This plugin is an independent project and is not affiliated with, endorsed by, or sponsored by Anthropic.</i>
 ]]></description>
 
     <change-notes><![CDATA[
