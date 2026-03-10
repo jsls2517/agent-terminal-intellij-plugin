@@ -38,6 +38,12 @@ A terminal integration plugin for Claude Code CLI. This plugin provides a tool w
                 instance="com.zhangwenbing.claude.ClaudeCodeConfigurable"
                 id="claude.code.settings"
                 displayName="Claude Code Terminal"/>
+        <!-- VFS 刷新服务：负责防抖调度和执行实际的 VFS 刷新操作 -->
+        <applicationService
+                serviceImplementation="com.zhangwenbing.claude.ClaudeCodeVfsRefreshService"/>
+        <!-- VFS 异步监听器：接收 VFS 事件并委托给 Service 处理 -->
+        <vfs.asyncListener
+                implementation="com.zhangwenbing.claude.ClaudeCodeVfsAsyncListener"/>
     </extensions>
 
     <actions>
