@@ -1,4 +1,4 @@
-package com.zhangwenbing.claude;
+package com.zhangwenbing.agent;
 
 import com.intellij.notification.NotificationType;
 import com.intellij.openapi.actionSystem.ActionUpdateThread;
@@ -20,7 +20,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * 将终端或控制台选中的文本发送到 Agent Terminal
  */
-public class SendConsoleSelectionToClaudeAction extends AnAction {
+public class SendConsoleSelectionToAgentAction extends AnAction {
 
     private static final DataKey<Editor> TERMINAL_EDITOR_KEY = DataKey.create("TERMINAL_EDITOR");
 
@@ -56,9 +56,9 @@ public class SendConsoleSelectionToClaudeAction extends AnAction {
         ApplicationManager.getApplication().invokeLater(() -> {
             try {
                 ToolWindow tw = ToolWindowManager.getInstance(project)
-                        .getToolWindow(ClaudeCodeToolWindowFactory.TOOL_WINDOW_ID);
+                        .getToolWindow(AgentToolWindowFactory.TOOL_WINDOW_ID);
                 if (tw == null) {
-                    ClaudeCodeUtils.notify(project, "未找到 Agent 工具窗", NotificationType.ERROR);
+                    AgentUtils.notify(project, "未找到 Agent 工具窗", NotificationType.ERROR);
                     return;
                 }
 
@@ -69,20 +69,20 @@ public class SendConsoleSelectionToClaudeAction extends AnAction {
 
                 // 如果没有内容，创建一次
                 if (cm.getContentCount() == 0) {
-                    new ClaudeCodeToolWindowFactory().createToolWindowContent(project, tw);
+                    new AgentToolWindowFactory().createToolWindowContent(project, tw);
                 }
 
                 // 获取 terminal widget 并发送命令
                 Content content = cm.getContent(0);
                 if (content != null) {
-                    TerminalWidget widget = content.getUserData(ClaudeCodeToolWindowFactory.WIDGET_KEY);
+                    TerminalWidget widget = content.getUserData(AgentToolWindowFactory.WIDGET_KEY);
                     if (widget != null) {
                         // 发送选中的文本到终端
-                        ClaudeCodeUtils.exec(project, widget, textToSend);
+                        AgentUtils.exec(project, widget, textToSend);
                     }
                 }
             } catch (Throwable ex) {
-                ClaudeCodeUtils.notify(project, "发送失败：" + ex.getMessage(), NotificationType.ERROR);
+                AgentUtils.notify(project, "发送失败：" + ex.getMessage(), NotificationType.ERROR);
             }
         });
     }

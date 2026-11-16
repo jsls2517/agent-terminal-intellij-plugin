@@ -1,4 +1,4 @@
-package com.zhangwenbing.claude;
+package com.zhangwenbing.agent;
 
 import com.intellij.notification.Notification;
 import com.intellij.notification.NotificationGroup;
@@ -16,10 +16,10 @@ import java.util.Objects;
 /**
  * Shared utility methods for Agent Terminal plugin
  */
-public final class ClaudeCodeUtils {
+public final class AgentUtils {
     private static final String NOTIF_GROUP_ID = "agent.terminal.notifications";
 
-    private ClaudeCodeUtils() {
+    private AgentUtils() {
         // Utility class - no instantiation
     }
 

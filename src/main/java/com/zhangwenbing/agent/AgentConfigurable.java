@@ -1,4 +1,4 @@
-package com.zhangwenbing.claude;
+package com.zhangwenbing.agent;
 
 import com.intellij.openapi.options.Configurable;
 import org.jetbrains.annotations.Nls;
@@ -11,7 +11,7 @@ import java.awt.*;
  * Agent Terminal 设置页面
  * 位置：Settings -> Tools -> Agent Terminal
  */
-public class ClaudeCodeConfigurable implements Configurable {
+public class AgentConfigurable implements Configurable {
 
     private JTextField commandField;
 
@@ -66,7 +66,7 @@ public class ClaudeCodeConfigurable implements Configurable {
 
     @Override
     public boolean isModified() {
-        String currentCommand = ClaudeCodeSettings.getInstance().getCommand();
+        String currentCommand = AgentSettings.getInstance().getCommand();
         String fieldCommand = normalizeCommand(commandField.getText());
         return !currentCommand.equals(fieldCommand);
     }
@@ -74,16 +74,16 @@ public class ClaudeCodeConfigurable implements Configurable {
     @Override
     public void apply() {
         String command = normalizeCommand(commandField.getText());
-        ClaudeCodeSettings.getInstance().setCommand(command);
+        AgentSettings.getInstance().setCommand(command);
     }
 
     private String normalizeCommand(String text) {
         String trimmed = text.trim();
-        return trimmed.isEmpty() ? ClaudeCodeSettings.DEFAULT_COMMAND : trimmed;
+        return trimmed.isEmpty() ? AgentSettings.DEFAULT_COMMAND : trimmed;
     }
 
     @Override
     public void reset() {
-        commandField.setText(ClaudeCodeSettings.getInstance().getCommand());
+        commandField.setText(AgentSettings.getInstance().getCommand());
     }
 }

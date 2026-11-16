@@ -1,4 +1,4 @@
-package com.zhangwenbing.claude;
+package com.zhangwenbing.agent;
 
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.PersistentStateComponent;
@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
  */
 @Service(Service.Level.APP)
 @State(name = "AgentSettings", storages = @Storage("agentSettings.xml"))
-public final class ClaudeCodeSettings implements PersistentStateComponent<ClaudeCodeSettings.State> {
+public final class AgentSettings implements PersistentStateComponent<AgentSettings.State> {
 
     public static final String DEFAULT_COMMAND = "agy";
 
@@ -23,8 +23,8 @@ public final class ClaudeCodeSettings implements PersistentStateComponent<Claude
 
     private State state = new State();
 
-    public static ClaudeCodeSettings getInstance() {
-        return ApplicationManager.getApplication().getService(ClaudeCodeSettings.class);
+    public static AgentSettings getInstance() {
+        return ApplicationManager.getApplication().getService(AgentSettings.class);
     }
 
     @Override

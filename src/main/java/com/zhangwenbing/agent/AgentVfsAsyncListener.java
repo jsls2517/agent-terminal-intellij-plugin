@@ -1,4 +1,4 @@
-package com.zhangwenbing.claude;
+package com.zhangwenbing.agent;
 
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.vfs.AsyncFileListener;
@@ -18,12 +18,12 @@ import java.util.stream.Collectors;
  * 实现 AsyncFileListener 接口，接收 VFS 事件并委托给 Service 处理
  * 注册为 vfs.asyncListener
  */
-public class ClaudeCodeVfsAsyncListener implements AsyncFileListener {
+public class AgentVfsAsyncListener implements AsyncFileListener {
 
-    private static final Logger LOG = Logger.getInstance(ClaudeCodeVfsAsyncListener.class);
+    private static final Logger LOG = Logger.getInstance(AgentVfsAsyncListener.class);
 
-    public ClaudeCodeVfsAsyncListener() {
-        LOG.debug("ClaudeCodeVfsAsyncListener 已初始化");
+    public AgentVfsAsyncListener() {
+        LOG.debug("AgentVfsAsyncListener 已初始化");
     }
 
     @Override
@@ -50,9 +50,9 @@ public class ClaudeCodeVfsAsyncListener implements AsyncFileListener {
         }
 
         // 委托给 Service 处理
-        ClaudeCodeVfsRefreshService service = ClaudeCodeVfsRefreshService.getInstance();
+        AgentVfsRefreshService service = AgentVfsRefreshService.getInstance();
         if (service == null) {
-            LOG.warn("ClaudeCodeVfsRefreshService 未初始化");
+            LOG.warn("AgentVfsRefreshService 未初始化");
             return null;
         }
 

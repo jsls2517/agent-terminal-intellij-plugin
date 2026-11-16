@@ -30,7 +30,7 @@ A terminal integration plugin for Agent CLI (such as agy, claude, opencode). Thi
         <toolWindow
                 id="Agent"
                 anchor="right"
-                factoryClass="com.zhangwenbing.claude.ClaudeCodeToolWindowFactory"
+                factoryClass="com.zhangwenbing.agent.AgentToolWindowFactory"
                 canCloseContents="false"
                 icon="/icons/agent.svg"/>
         <notificationGroup
@@ -40,15 +40,15 @@ A terminal integration plugin for Agent CLI (such as agy, claude, opencode). Thi
         <!-- Settings -> Tools -> Agent Terminal -->
         <applicationConfigurable
                 parentId="tools"
-                instance="com.zhangwenbing.claude.ClaudeCodeConfigurable"
+                instance="com.zhangwenbing.agent.AgentConfigurable"
                 id="agent.terminal.settings"
                 displayName="Agent Terminal"/>
         <!-- VFS 刷新服务：负责防抖调度和执行实际的 VFS 刷新操作 -->
         <applicationService
-                serviceImplementation="com.zhangwenbing.claude.ClaudeCodeVfsRefreshService"/>
+                serviceImplementation="com.zhangwenbing.agent.AgentVfsRefreshService"/>
         <!-- VFS 异步监听器：接收 VFS 事件并委托给 Service 处理 -->
         <vfs.asyncListener
-                implementation="com.zhangwenbing.claude.ClaudeCodeVfsAsyncListener"/>
+                implementation="com.zhangwenbing.agent.AgentVfsAsyncListener"/>
     </extensions>
 
     <actions>
@@ -60,7 +60,7 @@ A terminal integration plugin for Agent CLI (such as agy, claude, opencode). Thi
                    description="Agent actions"
                    popup="true">
                 <action id="Agent.SendToAgent"
-                        class="com.zhangwenbing.claude.SendToClaudeTerminalAction"
+                        class="com.zhangwenbing.agent.SendToAgentTerminalAction"
                         text="Send to Agent Terminal"
                         description="Send file reference (e.g. file.java:L1-5) to Agent Terminal"
                         icon="/icons/agent.svg">
@@ -80,7 +80,7 @@ A terminal integration plugin for Agent CLI (such as agy, claude, opencode). Thi
                    description="Agent actions"
                    popup="true">
                 <action id="Agent.SendConsoleSelectionToAgent"
-                        class="com.zhangwenbing.claude.SendConsoleSelectionToClaudeAction"
+                        class="com.zhangwenbing.agent.SendConsoleSelectionToAgentAction"
                         text="Send to Agent Terminal"
                         description="Send selected text to Agent Terminal"
                         icon="/icons/agent.svg">

@@ -1,4 +1,4 @@
-package com.zhangwenbing.claude;
+package com.zhangwenbing.agent;
 
 import com.intellij.ide.IdeEventQueue;
 import com.intellij.notification.NotificationType;
@@ -19,7 +19,7 @@ import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.util.Objects;
 
-public class ClaudeCodeToolWindowFactory implements ToolWindowFactory {
+public class AgentToolWindowFactory implements ToolWindowFactory {
     public static final String TOOL_WINDOW_ID = "Agent";
     public static final com.intellij.openapi.util.Key<TerminalWidget> WIDGET_KEY =
             com.intellij.openapi.util.Key.create("AGENT_WIDGET");
@@ -49,7 +49,7 @@ public class ClaudeCodeToolWindowFactory implements ToolWindowFactory {
         toolWindow.getContentManager().addContent(content);
 
         // Register key handlers:
-        // - ESC to forward to terminal (Claude Code uses ESC to interrupt)
+        // - ESC to forward to terminal (Agent CLI uses ESC to interrupt)
         // - Shift+Enter to insert newline (without sending command)
         // JetBrains intercepts ESC by default to switch focus to editor, so we need to catch it first
         IdeEventQueue.getInstance().addDispatcher(e -> {
@@ -62,7 +62,7 @@ public class ClaudeCodeToolWindowFactory implements ToolWindowFactory {
                             try {
                                 Objects.requireNonNull(widget.getTtyConnector()).write(new byte[]{0x1B});
                             } catch (Exception ex) {
-                                ClaudeCodeUtils.notify(project, "发送失败：" + ex.getMessage(), NotificationType.ERROR);
+                                AgentUtils.notify(project, "发送失败：" + ex.getMessage(), NotificationType.ERROR);
                             }
                             return true; // Consume the event
                         }
@@ -71,7 +71,7 @@ public class ClaudeCodeToolWindowFactory implements ToolWindowFactory {
                             try {
                                 Objects.requireNonNull(widget.getTtyConnector()).write(new byte[]{'\n'});
                             } catch (Exception ex) {
-                                ClaudeCodeUtils.notify(project, "发送失败：" + ex.getMessage(), NotificationType.ERROR);
+                                AgentUtils.notify(project, "发送失败：" + ex.getMessage(), NotificationType.ERROR);
                             }
                             return true; // Consume the event
                         }
@@ -94,9 +94,9 @@ public class ClaudeCodeToolWindowFactory implements ToolWindowFactory {
             @Override
             public void run() {
                 if (widget.getTtyConnector() != null && widget.getTtyConnector().isConnected()) {
-                    String command = ClaudeCodeSettings.getInstance().getCommand();
+                    String command = AgentSettings.getInstance().getCommand();
                     ApplicationManager.getApplication().invokeLater(() ->
-                            ClaudeCodeUtils.exec(project, widget, command)
+                            AgentUtils.exec(project, widget, command)
                     );
                     return; // 成功，停止轮询
                 }

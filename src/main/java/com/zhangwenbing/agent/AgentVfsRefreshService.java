@@ -1,4 +1,4 @@
-package com.zhangwenbing.claude;
+package com.zhangwenbing.agent;
 
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.application.ApplicationManager;
@@ -27,9 +27,9 @@ import java.util.stream.Collectors;
  * 负责维护待刷新文件队列、防抖调度和执行实际的 VFS 刷新操作
  * 注册为 applicationService
  */
-public class ClaudeCodeVfsRefreshService implements Disposable {
+public class AgentVfsRefreshService implements Disposable {
 
-    private static final Logger LOG = Logger.getInstance(ClaudeCodeVfsRefreshService.class);
+    private static final Logger LOG = Logger.getInstance(AgentVfsRefreshService.class);
 
     /**
      * 防抖延迟（毫秒）
@@ -52,15 +52,15 @@ public class ClaudeCodeVfsRefreshService implements Disposable {
     private volatile boolean isDisposed = false;
     private volatile Future<?> currentRefreshTask;
 
-    public ClaudeCodeVfsRefreshService() {
+    public AgentVfsRefreshService() {
         this.alarm = new Alarm(Alarm.ThreadToUse.POOLED_THREAD, this);
     }
 
     /**
      * 获取全局实例
      */
-    public static ClaudeCodeVfsRefreshService getInstance() {
-        return ApplicationManager.getApplication().getService(ClaudeCodeVfsRefreshService.class);
+    public static AgentVfsRefreshService getInstance() {
+        return ApplicationManager.getApplication().getService(AgentVfsRefreshService.class);
     }
 
     /**
@@ -355,6 +355,6 @@ public class ClaudeCodeVfsRefreshService implements Disposable {
             pendingFiles.clear();
         }
 
-        LOG.info("ClaudeCodeVfsRefreshService 已释放");
+        LOG.info("AgentVfsRefreshService 已释放");
     }
 }

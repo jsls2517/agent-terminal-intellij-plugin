@@ -1,4 +1,4 @@
-package com.zhangwenbing.claude;
+package com.zhangwenbing.agent;
 
 import com.intellij.notification.NotificationType;
 import com.intellij.openapi.actionSystem.ActionUpdateThread;
@@ -17,7 +17,7 @@ import com.intellij.terminal.ui.TerminalWidget;
 
 import java.util.Objects;
 
-public class SendToClaudeTerminalAction extends AnAction {
+public class SendToAgentTerminalAction extends AnAction {
 
     @Override
     public @NotNull ActionUpdateThread getActionUpdateThread() {
@@ -40,7 +40,7 @@ public class SendToClaudeTerminalAction extends AnAction {
         Editor editor = e.getData(CommonDataKeys.EDITOR);
         VirtualFile file = e.getData(CommonDataKeys.VIRTUAL_FILE);
         if (editor == null || file == null) {
-            ClaudeCodeUtils.notify(project, "无法获取文件信息", NotificationType.ERROR);
+            AgentUtils.notify(project, "无法获取文件信息", NotificationType.ERROR);
             return;
         }
 
@@ -61,9 +61,9 @@ public class SendToClaudeTerminalAction extends AnAction {
         ApplicationManager.getApplication().invokeLater(() -> {
             try {
                 ToolWindow tw = ToolWindowManager.getInstance(project)
-                        .getToolWindow(ClaudeCodeToolWindowFactory.TOOL_WINDOW_ID);
+                        .getToolWindow(AgentToolWindowFactory.TOOL_WINDOW_ID);
                 if (tw == null) {
-                    ClaudeCodeUtils.notify(project, "未找到 Agent 工具窗", NotificationType.ERROR);
+                    AgentUtils.notify(project, "未找到 Agent 工具窗", NotificationType.ERROR);
                     return;
                 }
 
@@ -74,20 +74,20 @@ public class SendToClaudeTerminalAction extends AnAction {
 
                 // 如果没有内容，创建一次
                 if (cm.getContentCount() == 0) {
-                    new ClaudeCodeToolWindowFactory().createToolWindowContent(project, tw);
+                    new AgentToolWindowFactory().createToolWindowContent(project, tw);
                 }
 
                 // 获取 terminal widget 并发送命令
                 Content content = cm.getContent(0);
                 if (content != null) {
-                    TerminalWidget widget = content.getUserData(ClaudeCodeToolWindowFactory.WIDGET_KEY);
+                    TerminalWidget widget = content.getUserData(AgentToolWindowFactory.WIDGET_KEY);
                     if (widget != null) {
                         // 发送文件引用到终端
-                        ClaudeCodeUtils.exec(project, widget, fileRef);
+                        AgentUtils.exec(project, widget, fileRef);
                     }
                 }
             } catch (Throwable ex) {
-                ClaudeCodeUtils.notify(project, "发送失败：" + ex.getMessage(), NotificationType.ERROR);
+                AgentUtils.notify(project, "发送失败：" + ex.getMessage(), NotificationType.ERROR);
             }
         });
     }
