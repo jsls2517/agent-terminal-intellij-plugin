@@ -1,12 +1,12 @@
 <idea-plugin>
     <id>com.zhangwenbing.claude</id>
     <name>Claude Code Terminal</name>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
 
     <vendor email="wenbing@mgtv.com">wenbing</vendor>
 
-    <!-- 兼容范围：242+ 覆盖 2024.2 起的大多数版本。后续可再调大/小。 -->
-    <idea-version since-build="242.0"/>
+    <!-- 兼容范围：243+ 覆盖 2024.3 起的新版终端。后续可再调大/小。 -->
+    <idea-version since-build="243.0"/>
 
     <description><![CDATA[
 A terminal integration plugin for Claude Code CLI. This plugin provides a tool window to run and interact with Claude Code directly within JetBrains IDEs.
@@ -15,7 +15,12 @@ A terminal integration plugin for Claude Code CLI. This plugin provides a tool w
 ]]></description>
 
     <change-notes><![CDATA[
-
+<h3>1.2.0</h3>
+<ul>
+    <li>支持从新版终端（New Terminal）选中输出内容或命令提示符直接发送至 Claude Code Terminal。</li>
+    <li>接入 Terminal.OutputContextMenu 与 Terminal.PromptContextMenu 原生终端右键菜单。</li>
+    <li>遵循现代 IntelliJ Platform 规范，全面适配 ActionUpdateThread.BGT，提升界面响应效率。</li>
+</ul>
 ]]></change-notes>
 
     <depends>com.intellij.modules.platform</depends>
@@ -67,7 +72,7 @@ A terminal integration plugin for Claude Code CLI. This plugin provides a tool w
             <add-to-group group-id="Diff.EditorPopupMenu" anchor="first"/>
         </group>
 
-        <!-- 终端右键菜单：发送选中文本 -->
+        <!-- 终端与控制台右键菜单：发送选中文本 -->
         <group id="ClaudeCode.ConsoleGroup">
             <separator/>
             <group id="ClaudeCode.ConsoleActionGroup"
@@ -77,12 +82,17 @@ A terminal integration plugin for Claude Code CLI. This plugin provides a tool w
                 <action id="ClaudeCode.SendConsoleSelectionToClaude"
                         class="com.zhangwenbing.claude.SendConsoleSelectionToClaudeAction"
                         text="Send to Claude Code Terminal"
-                        description="Send selected text from console to Claude Code Terminal"
+                        description="Send selected text to Claude Code Terminal"
                         icon="/icons/agent.svg">
                 </action>
             </group>
             <separator/>
+            <!-- 控制台右键菜单（Run / Debug 等输出控制台） -->
             <add-to-group group-id="ConsoleEditorPopupMenu" anchor="first"/>
+            <!-- 新版终端输出区右键菜单 -->
+            <add-to-group group-id="Terminal.OutputContextMenu" anchor="first"/>
+            <!-- 新版终端命令提示区右键菜单 -->
+            <add-to-group group-id="Terminal.PromptContextMenu" anchor="first"/>
         </group>
     </actions>
 </idea-plugin>

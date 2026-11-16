@@ -1,6 +1,7 @@
 package com.zhangwenbing.claude;
 
 import com.intellij.notification.NotificationType;
+import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
@@ -19,9 +20,14 @@ import org.jetbrains.annotations.NotNull;
 public class SendConsoleSelectionToClaudeAction extends AnAction {
 
     @Override
+    public @NotNull ActionUpdateThread getActionUpdateThread() {
+        return ActionUpdateThread.BGT;
+    }
+
+    @Override
     public void update(@NotNull AnActionEvent e) {
         Editor editor = e.getData(CommonDataKeys.EDITOR);
-        boolean condition = editor != null && editor.getCaretModel().getCurrentCaret().hasSelection();
+        boolean condition = editor != null && editor.getSelectionModel().hasSelection();
         e.getPresentation().setEnabledAndVisible(condition);
     }
 
@@ -30,10 +36,11 @@ public class SendConsoleSelectionToClaudeAction extends AnAction {
         Project project = e.getProject();
         if (project == null) return;
 
-        Editor editor = e.getRequiredData(CommonDataKeys.EDITOR);
-        String selectedText = editor.getCaretModel().getCurrentCaret().getSelectedText();
+        Editor editor = e.getData(CommonDataKeys.EDITOR);
+        if (editor == null) return;
 
-        if (selectedText == null) {
+        String selectedText = editor.getSelectionModel().getSelectedText();
+        if (selectedText == null || selectedText.trim().isEmpty()) {
             return;
         }
 
@@ -62,7 +69,7 @@ public class SendConsoleSelectionToClaudeAction extends AnAction {
                     TerminalWidget widget = content.getUserData(ClaudeCodeToolWindowFactory.WIDGET_KEY);
                     if (widget != null) {
                         // 发送选中的文本到终端
-                        ClaudeCodeUtils.exec(project, widget, selectedText);
+                        ClaudeCodeUtils.exec(project, widget, selectedText.trim());
                     }
                 }
             } catch (Throwable ex) {

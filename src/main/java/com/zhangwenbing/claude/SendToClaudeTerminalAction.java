@@ -1,6 +1,7 @@
 package com.zhangwenbing.claude;
 
 import com.intellij.notification.NotificationType;
+import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
@@ -17,6 +18,19 @@ import com.intellij.terminal.ui.TerminalWidget;
 import java.util.Objects;
 
 public class SendToClaudeTerminalAction extends AnAction {
+
+    @Override
+    public @NotNull ActionUpdateThread getActionUpdateThread() {
+        return ActionUpdateThread.BGT;
+    }
+
+    @Override
+    public void update(@NotNull AnActionEvent e) {
+        Project project = e.getProject();
+        Editor editor = e.getData(CommonDataKeys.EDITOR);
+        VirtualFile file = e.getData(CommonDataKeys.VIRTUAL_FILE);
+        e.getPresentation().setEnabledAndVisible(project != null && editor != null && file != null);
+    }
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
