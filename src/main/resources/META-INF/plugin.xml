@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.zhangwenbing.agent</id>
     <name>Agent Terminal</name>
-    <version>1.2.0</version>
+    <version>1.3.0</version>
 
     <vendor email="wenbing@mgtv.com">wenbing</vendor>
 
@@ -13,6 +13,11 @@ A terminal integration plugin for Agent CLI (such as agy, claude, opencode). Thi
 ]]></description>
 
     <change-notes><![CDATA[
+<h3>1.3.0</h3>
+<ul>
+    <li>工具窗口设置菜单新增“重启终端”功能，支持一键重置会话并重新运行启动命令。</li>
+    <li>优化按键监听器架构，动态适配终端会话重启后的快捷键响应。</li>
+</ul>
 <h3>1.2.0</h3>
 <ul>
     <li>插件全面更名为 Agent Terminal，默认启动命令调整为 agy。</li>
@@ -52,18 +57,25 @@ A terminal integration plugin for Agent CLI (such as agy, claude, opencode). Thi
     </extensions>
 
     <actions>
+        <!-- 重启终端 Action -->
+        <action id="Agent.RestartTerminal"
+                class="com.zhangwenbing.agent.RestartAgentTerminalAction"
+                text="重启终端"
+                description="重新启动终端会话并运行启动命令">
+        </action>
+
         <!-- 编辑器右键菜单：发送文件引用 -->
         <group id="Agent.EditorGroup">
             <separator/>
             <group id="Agent.EditorActionGroup"
                    text="Agent Actions"
                    description="Agent actions"
+                   icon="/icons/agent.svg"
                    popup="true">
                 <action id="Agent.SendToAgent"
                         class="com.zhangwenbing.agent.SendToAgentTerminalAction"
                         text="Send to Agent Terminal"
-                        description="Send file reference (e.g. file.java:L1-5) to Agent Terminal"
-                        icon="/icons/agent.svg">
+                        description="Send file reference (e.g. file.java:L1-5) to Agent Terminal">
                 </action>
             </group>
             <separator/>
@@ -78,12 +90,12 @@ A terminal integration plugin for Agent CLI (such as agy, claude, opencode). Thi
             <group id="Agent.ConsoleActionGroup"
                    text="Agent Actions"
                    description="Agent actions"
+                   icon="/icons/agent.svg"
                    popup="true">
                 <action id="Agent.SendConsoleSelectionToAgent"
                         class="com.zhangwenbing.agent.SendConsoleSelectionToAgentAction"
                         text="Send to Agent Terminal"
-                        description="Send selected text to Agent Terminal"
-                        icon="/icons/agent.svg">
+                        description="Send selected text to Agent Terminal">
                 </action>
             </group>
             <separator/>
