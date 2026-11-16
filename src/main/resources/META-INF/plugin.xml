@@ -89,6 +89,8 @@ A terminal integration plugin for Agent CLI (such as agy, claude, opencode). Thi
             <separator/>
             <!-- 控制台右键菜单（Run / Debug 等输出控制台） -->
             <add-to-group group-id="ConsoleEditorPopupMenu" anchor="first"/>
+            <!-- 2025/2026 重制版终端右键菜单（Reworked Terminal Context Menu） -->
+            <add-to-group group-id="Terminal.ReworkedTerminalContextMenu" anchor="first"/>
             <!-- 新版终端输出区右键菜单 -->
             <add-to-group group-id="Terminal.OutputContextMenu" anchor="first"/>
             <!-- 新版终端命令提示区右键菜单 -->
