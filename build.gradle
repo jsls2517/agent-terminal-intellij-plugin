@@ -4,7 +4,8 @@ plugins {
 }
 
 group = 'com.zhangwenbing.agent'
-version = '1.3.0'
+def cliVersion = providers.gradleProperty('pluginVersion').orNull?.trim()
+version = cliVersion ? cliVersion : '1.3.0'
 
 repositories {
     mavenCentral()
@@ -22,6 +23,7 @@ dependencies {
 
 intellijPlatform {
     pluginConfiguration {
+        version = project.version.toString()
         ideaVersion {
             sinceBuild = '243'
             untilBuild = provider { null }
