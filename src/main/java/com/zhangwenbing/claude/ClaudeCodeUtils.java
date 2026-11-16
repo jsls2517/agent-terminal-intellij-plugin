@@ -14,10 +14,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 /**
- * Shared utility methods for Claude Code plugin
+ * Shared utility methods for Agent Terminal plugin
  */
 public final class ClaudeCodeUtils {
-    private static final String NOTIF_GROUP_ID = "claude.code.notifications";
+    private static final String NOTIF_GROUP_ID = "agent.terminal.notifications";
 
     private ClaudeCodeUtils() {
         // Utility class - no instantiation
@@ -63,7 +63,7 @@ public final class ClaudeCodeUtils {
         NotificationGroup group = NotificationGroupManager.getInstance().getNotificationGroup(NOTIF_GROUP_ID);
         Notification notification = (group != null)
                 ? group.createNotification(msg, type)
-                : new Notification(NOTIF_GROUP_ID, "Claude Code", msg, type);
+                : new Notification(NOTIF_GROUP_ID, "Agent", msg, type);
         Notifications.Bus.notify(notification, project);
     }
 }

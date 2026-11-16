@@ -9,13 +9,13 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * 应用级配置，存储 Claude Code Terminal 的设置
+ * 应用级配置，存储 Agent Terminal 的设置
  */
 @Service(Service.Level.APP)
-@State(name = "ClaudeCodeSettings", storages = @Storage("claudeCodeSettings.xml"))
+@State(name = "AgentSettings", storages = @Storage("agentSettings.xml"))
 public final class ClaudeCodeSettings implements PersistentStateComponent<ClaudeCodeSettings.State> {
 
-    public static final String DEFAULT_COMMAND = "claude";
+    public static final String DEFAULT_COMMAND = "agy";
 
     public static class State {
         public String command = DEFAULT_COMMAND;

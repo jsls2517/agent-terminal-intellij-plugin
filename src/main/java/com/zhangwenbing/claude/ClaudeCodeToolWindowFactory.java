@@ -20,11 +20,11 @@ import java.awt.event.KeyEvent;
 import java.util.Objects;
 
 public class ClaudeCodeToolWindowFactory implements ToolWindowFactory {
-    public static final String TOOL_WINDOW_ID = "Claude Code";
+    public static final String TOOL_WINDOW_ID = "Agent";
     public static final com.intellij.openapi.util.Key<TerminalWidget> WIDGET_KEY =
-            com.intellij.openapi.util.Key.create("CLAUDE_CODE_WIDGET");
+            com.intellij.openapi.util.Key.create("AGENT_WIDGET");
     private static final com.intellij.openapi.util.Key<Boolean> AUTORUN_DONE_KEY =
-            com.intellij.openapi.util.Key.create("CLAUDE_CODE_AUTORUN_DONE");
+            com.intellij.openapi.util.Key.create("AGENT_AUTORUN_DONE");
 
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {

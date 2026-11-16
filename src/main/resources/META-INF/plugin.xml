@@ -1,6 +1,6 @@
 <idea-plugin>
-    <id>com.zhangwenbing.claude</id>
-    <name>Claude Code Terminal</name>
+    <id>com.zhangwenbing.agent</id>
+    <name>Agent Terminal</name>
     <version>1.2.0</version>
 
     <vendor email="wenbing@mgtv.com">wenbing</vendor>
@@ -9,15 +9,15 @@
     <idea-version since-build="243.0"/>
 
     <description><![CDATA[
-A terminal integration plugin for Claude Code CLI. This plugin provides a tool window to run and interact with Claude Code directly within JetBrains IDEs.
-
-<i>Disclaimer: This plugin is an independent project and is not affiliated with, endorsed by, or sponsored by Anthropic.</i>
+A terminal integration plugin for Agent CLI (such as agy, claude, opencode). This plugin provides a tool window to run and interact with your AI agent directly within JetBrains IDEs.
 ]]></description>
 
     <change-notes><![CDATA[
 <h3>1.2.0</h3>
 <ul>
-    <li>支持从新版终端（New Terminal）选中输出内容或命令提示符直接发送至 Claude Code Terminal。</li>
+    <li>插件全面更名为 Agent Terminal，默认启动命令调整为 agy。</li>
+    <li>全新设计 Agent 风格图标。</li>
+    <li>支持从新版终端（New Terminal）选中输出内容或命令提示符直接发送至 Agent Terminal。</li>
     <li>接入 Terminal.OutputContextMenu 与 Terminal.PromptContextMenu 原生终端右键菜单。</li>
     <li>遵循现代 IntelliJ Platform 规范，全面适配 ActionUpdateThread.BGT，提升界面响应效率。</li>
 </ul>
@@ -28,21 +28,21 @@ A terminal integration plugin for Claude Code CLI. This plugin provides a tool w
 
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow
-                id="Claude Code"
+                id="Agent"
                 anchor="right"
                 factoryClass="com.zhangwenbing.claude.ClaudeCodeToolWindowFactory"
                 canCloseContents="false"
                 icon="/icons/agent.svg"/>
         <notificationGroup
-                id="claude.code.notifications"
+                id="agent.terminal.notifications"
                 displayType="BALLOON"
                 isLogByDefault="true"/>
-        <!-- Settings -> Tools -> Claude Code Terminal -->
+        <!-- Settings -> Tools -> Agent Terminal -->
         <applicationConfigurable
                 parentId="tools"
                 instance="com.zhangwenbing.claude.ClaudeCodeConfigurable"
-                id="claude.code.settings"
-                displayName="Claude Code Terminal"/>
+                id="agent.terminal.settings"
+                displayName="Agent Terminal"/>
         <!-- VFS 刷新服务：负责防抖调度和执行实际的 VFS 刷新操作 -->
         <applicationService
                 serviceImplementation="com.zhangwenbing.claude.ClaudeCodeVfsRefreshService"/>
@@ -53,16 +53,16 @@ A terminal integration plugin for Claude Code CLI. This plugin provides a tool w
 
     <actions>
         <!-- 编辑器右键菜单：发送文件引用 -->
-        <group id="ClaudeCode.EditorGroup">
+        <group id="Agent.EditorGroup">
             <separator/>
-            <group id="ClaudeCode.EditorActionGroup"
-                   text="Claude Actions"
-                   description="Claude Code actions"
+            <group id="Agent.EditorActionGroup"
+                   text="Agent Actions"
+                   description="Agent actions"
                    popup="true">
-                <action id="ClaudeCode.SendToClaude"
+                <action id="Agent.SendToAgent"
                         class="com.zhangwenbing.claude.SendToClaudeTerminalAction"
-                        text="Send to Claude Code Terminal"
-                        description="Send file reference (e.g. file.java:L1-5) to Claude Code Terminal"
+                        text="Send to Agent Terminal"
+                        description="Send file reference (e.g. file.java:L1-5) to Agent Terminal"
                         icon="/icons/agent.svg">
                 </action>
             </group>
@@ -73,16 +73,16 @@ A terminal integration plugin for Claude Code CLI. This plugin provides a tool w
         </group>
 
         <!-- 终端与控制台右键菜单：发送选中文本 -->
-        <group id="ClaudeCode.ConsoleGroup">
+        <group id="Agent.ConsoleGroup">
             <separator/>
-            <group id="ClaudeCode.ConsoleActionGroup"
-                   text="Claude Actions"
-                   description="Claude Code actions"
+            <group id="Agent.ConsoleActionGroup"
+                   text="Agent Actions"
+                   description="Agent actions"
                    popup="true">
-                <action id="ClaudeCode.SendConsoleSelectionToClaude"
+                <action id="Agent.SendConsoleSelectionToAgent"
                         class="com.zhangwenbing.claude.SendConsoleSelectionToClaudeAction"
-                        text="Send to Claude Code Terminal"
-                        description="Send selected text to Claude Code Terminal"
+                        text="Send to Agent Terminal"
+                        description="Send selected text to Agent Terminal"
                         icon="/icons/agent.svg">
                 </action>
             </group>

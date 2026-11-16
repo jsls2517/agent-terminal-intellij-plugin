@@ -63,7 +63,7 @@ public class SendToClaudeTerminalAction extends AnAction {
                 ToolWindow tw = ToolWindowManager.getInstance(project)
                         .getToolWindow(ClaudeCodeToolWindowFactory.TOOL_WINDOW_ID);
                 if (tw == null) {
-                    ClaudeCodeUtils.notify(project, "未找到 Claude Code 工具窗", NotificationType.ERROR);
+                    ClaudeCodeUtils.notify(project, "未找到 Agent 工具窗", NotificationType.ERROR);
                     return;
                 }
 

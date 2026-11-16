@@ -8,8 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Claude Code Terminal 设置页面
- * 位置：Settings -> Tools -> Claude Code Terminal
+ * Agent Terminal 设置页面
+ * 位置：Settings -> Tools -> Agent Terminal
  */
 public class ClaudeCodeConfigurable implements Configurable {
 
@@ -17,7 +17,7 @@ public class ClaudeCodeConfigurable implements Configurable {
 
     @Override
     public @Nls(capitalization = Nls.Capitalization.Title) String getDisplayName() {
-        return "Claude Code Terminal";
+        return "Agent Terminal";
     }
 
     @Override
@@ -43,7 +43,7 @@ public class ClaudeCodeConfigurable implements Configurable {
         panel.add(commandField, gbc);
 
         // 提示文字
-        JLabel hintLabel = new JLabel("默认: claude（也可输入 opencode 等其他命令）");
+        JLabel hintLabel = new JLabel("默认: agy（也可输入 claude、opencode 等其他命令）");
         hintLabel.setForeground(UIManager.getColor("Component.info.foreground"));
         gbc.gridx = 0;
         gbc.gridy = 1;
